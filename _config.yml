@@ -16,11 +16,8 @@ disqus_shortname: ryneli-github-io
 # a new whidow will be open when link is clicked.
 #
 about:
-  - paragraph: Personal Information
-    text_align: center
-    links:
-      - name: Zhenqiang Li
-        url: zhenqiang.li
-        external: false
+Zhenqiang Li (Ryne)
+
+include: ["_pages"]
 
     
