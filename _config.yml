@@ -1,3 +1,4 @@
+include: ["_pages"]
 title: Zhenqiang Li's Homepage
 description: I am currently a Computer Science Master student at Lehigh University. I will post something related to my major or my interest here.
 url: zhenqiang.li
@@ -6,18 +7,3 @@ favicon: /assets/img/favicon.ico
 google_analytics: # google analytics id
 disqus_shortname: ryneli-github-io
 
-# Content for about page.
-# Each paragraph will be a <p> tag which is inserted to about
-# page. text_align is used to align the text. Default is left.
-# Other two values are center and right. If there are some links
-# in your paragraph, use '?link?' to take the place of a link.
-# And then write the real link under links. name is the link
-# text. url is the link. when external is set as true, then
-# a new whidow will be open when link is clicked.
-#
-about:
-Zhenqiang Li (Ryne)
-
-include: ["_pages"]
-
-    

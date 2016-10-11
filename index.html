@@ -3,5 +3,9 @@ layout: page
 ---
 <div class="index-wrapper">
   <a class="link-1" href="{{ site.posts[0].url }}">post</a> /
-  <a class="link-1" href="/about/">about</a> /
+  {% for page in site.pages %}
+  {% if page.title != 404 %}
+  <a class="link-1" href="{{ page.url }}">{{ page.title }}</a>
+  {% endif %}
+  {% endfor %}
 </div>
