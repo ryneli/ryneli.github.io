@@ -2,7 +2,7 @@
 layout: post
 title: "useful git commands"
 date: 2016-10-10
-categories: git, github, programming tools
+tags: git, github, programming tools
 ---
 
 Write down handful tips for using git.

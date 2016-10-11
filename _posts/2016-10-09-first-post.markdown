@@ -2,7 +2,7 @@
 layout: post
 title: "Steps to build my homepage"
 date: 2016-10-09
-categories: notes
+tags: notes
 ---
 
 This blog is trying to backup the steps to build my homepage.
