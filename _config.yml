@@ -1,9 +1,0 @@
-include: ["_pages"]
-title: Zhenqiang Li's Homepage
-description: I am currently a Computer Science Master student at Lehigh University. I will post something related to my major or my interest here.
-url: zhenqiang.li
-avatar: /assets/img/avatar.jpg
-favicon: /assets/img/favicon.ico
-google_analytics: # google analytics id
-disqus_shortname: ryneli-github-io
-
