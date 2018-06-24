@@ -4,7 +4,7 @@ author: "Zhenqiang Li"
 description: "This blogs is about some notes in software developing and bible study."
 keywords: "Android, Bible"
 biography: "I am a Software Engineer at Google" # TODO: add resume "<a href='/assets/cv.pdf'>Résumé</a>."
-colophon: "© 2018 — 2018 by Zhenqiang Li."
+colophon: "© 2018 by Zhenqiang Li."
 
 baseurl: ""
 url: "http://zhenqiang.li"
