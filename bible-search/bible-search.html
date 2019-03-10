@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bible PPT</title>
+<link rel="stylesheet" href="./bible-search.css">
+</head>
+<body>
+    <script>
+        function start() {
+            var searchBox = document.getElementById('search-box');
+            var slideShow = document.getElementById('slide-show');
+            console.log('%o', searchBox);
+            slideShow.src='./bible-ppt.html?q=' + searchBox.value;
+        }
+        
+        /* View in fullscreen */
+        function openFullscreen() {
+            var elem = document.getElementById('slide-show');
+            if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+            }
+        }
+        
+        /* Close fullscreen */
+        function closeFullscreen() {
+            var elem = document.getElementById('slide-show');
+            if (document.exitFullscreen) {
+            document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+            document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+            document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+            document.msExitFullscreen();
+            }
+        }
+    </script>
+    <form>
+        <input id="search-box" type="text" />
+        <input type="button" value="Search" onclick="start()" />
+    </form>
+    <button onclick="openFullscreen()">Fullscreen</button>
+    <iframe id="slide-show" src="./bible-ppt.html"></iframe>
+</body>
+</html>
