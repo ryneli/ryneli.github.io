@@ -20,16 +20,39 @@
 <body>
     <div class="reveal">
         <div class="slides" id="slides-root">
-            <section id="blank"><h1>Bible verses</h1></section>
+            <section id="blank">
+                <h1>Bible verses</h1>
+                <div>
+                    <input type="text" id="search-text" placeholder="eg: John3:16"/>
+                    <button onclick="start()">Search</button>
+                    <button onclick="openFullscreen()">Full screen</button>
+                </div>
+            </section>
         </div>
     </div>
 
     <script>
-        var urlParams = new URLSearchParams(window.location.search);
-        var q = urlParams.get('q');
-        var slidesRootEl = document.getElementById('slides-root');
-        if (q && slidesRootEl) {
-            showPPT(q, slidesRootEl);
+        function start() {
+            var searchBox = document.getElementById('search-text');
+            var slidesRootEl = document.getElementById('slides-root');
+            var slideShow = document.getElementById('slide-show');
+            if (searchBox.value && slidesRootEl) {
+                showPPT(searchBox.value, slidesRootEl);
+            }
+        }
+        
+        /* View in fullscreen */
+        function openFullscreen() {
+            var elem = document.getElementById('slides-root');
+            if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+            }
         }
     </script>
 
