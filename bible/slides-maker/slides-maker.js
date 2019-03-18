@@ -22,6 +22,13 @@ function showBook(q, title, slidesRootEl) {
     });
 }
 
+function clear(slidesRootEl) {
+    Array.from(slidesRootEl.children)
+    .filter((childEl) => 
+        childEl.tagName.toLowerCase() === 'section' && childEl.id != 'search')
+    .map((childEl) => childEl.remove());
+}
+
 function beautifyName(q) {
     for (const key in BOOK_NAME_MAP) {
         if (q.toLowerCase().startsWith(key)) {

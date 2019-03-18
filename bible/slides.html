@@ -20,11 +20,11 @@
 <body>
     <div class="reveal">
         <div class="slides" id="slides-root">
-            <section id="blank">
+            <section id="search">
                 <h1>Bible verses</h1>
                 <div>
                     <input type="text" id="search-text" style="font-size:0.6em;" placeholder="eg: John3:16"/>
-                    <button onclick="start()" style="font-size:0.6em;">Search</button>
+                    <button type="button" id="search-button" onclick="start()" style="font-size:0.6em;">Search</button>
                     <button onclick="openFullscreen()" style="font-size:0.6em;">Full screen</button>
                 </div>
             </section>
@@ -33,10 +33,11 @@
 
     <script>
         function start() {
+            var searchButton = document.getElementById('search-button');
             var searchBox = document.getElementById('search-text');
             var slidesRootEl = document.getElementById('slides-root');
-            var slideShow = document.getElementById('slide-show');
             if (searchBox.value && slidesRootEl) {
+                clear(slidesRootEl);
                 showPPT(searchBox.value, slidesRootEl);
             }
         }
