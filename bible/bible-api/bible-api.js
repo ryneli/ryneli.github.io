@@ -30,7 +30,7 @@ class BibleApi {
 
     _query(p, v) {
         var promise = jQuery.ajax({
-            url:'http://getbible.net/json',
+            url:'https://getbible.net/json',
             dataType: 'jsonp',
             data: `p=${p}&v=${v}`,
             jsonp: 'getbible',
