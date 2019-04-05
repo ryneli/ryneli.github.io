@@ -13,11 +13,13 @@
     canvas = document.getElementById("canvas");
     output = document.getElementById("output");
     function print(prefix, e) {
-        s = `${prefix} ${e.x} ${e.y} ${e.clientX} ${e.clientY}`;
         if (prefix === 'touchstart') {
             s = `${prefix} ${e.touches[0].clientX} ${e.touches[0].clientY}`;
+            output.innerHTML = output.innerHTML + '<br>' +s;
+        } else {
+            s = `${prefix} ${e.x} ${e.y} ${e.clientX} ${e.clientY}`;
+            output.innerHTML = output.innerHTML + '<br>' +s;
         }
-        output.innerHTML = output.innerHTML + '<br>' +s;
         e.preventDefault();
     }
     canvas.addEventListener("touchstart", (e) => print('touchstart', e));
