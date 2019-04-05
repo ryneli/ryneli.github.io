@@ -4,7 +4,7 @@
 <body>
 
 <label id="output" >no info</label>
-<svg id="canvas" height="500" width="500" style="background-color:aliceblue; top: 100px; left: 100px; position: absolute">
+<svg id="canvas" height="500" width="500" style="background-color:aliceblue; top: 100px; left: 500px; position: absolute">
   <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
   Sorry, your browser does not support inline SVG.  
 </svg> 
@@ -13,8 +13,8 @@
     canvas = document.getElementById("canvas");
     output = document.getElementById("output");
     function print(prefix, e) {
-        s = `${prefix} ${e.x} ${e.y}`
-        output.innerText = s;
+        s = `${prefix} ${e.x} ${e.y} ${e.clientX} ${e.clientY}`
+        output.innerHTML = output.innerHTML + '<br>' +s;
     }
     canvas.addEventListener("touchstart", (e) => print('touchevent', e));
     canvas.addEventListener("mousedown", (e) => print('mousedown', e));
