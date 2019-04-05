@@ -13,12 +13,15 @@
     canvas = document.getElementById("canvas");
     output = document.getElementById("output");
     function print(prefix, e) {
+        rect = e.srcElement.getBoundingClientRect();
         if (prefix === 'touchstart') {
             touch = e.touches[0];
             s = `${prefix} ${touch.touchType} ${touch.identifier} ${touch.clientX} ${touch.clientY}`;
+            s = `${s} ${rect.top} ${rect.left}`
             output.innerHTML = output.innerHTML + '<br>' +s;
         } else {
             s = `${prefix} ${e.x} ${e.y} ${e.clientX} ${e.clientY}`;
+            s = `${s} ${rect.top} ${rect.left}`
             output.innerHTML = output.innerHTML + '<br>' +s;
         }
         e.preventDefault();
