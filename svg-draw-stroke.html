@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<svg id="canvas" height="500" width="500" style="background-color:aliceblue">
+  Sorry, your browser does not support inline SVG.  
+</svg> 
+ 
+<script>
+    let canvas = document.getElementById("canvas");
+    let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    let d = '';
+
+    function initPath() {
+        path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('stroke', 'black');
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke-width', '3');
+        d = '';
+    }
+
+    function startStroke(x, y) {
+        d = `M ${x} ${y}`;
+        canvas.append(path);
+    }
+
+    function updateStroke(x, y) {
+        console.log('updateStroke %s', d);
+        if (d.startsWith('M')) {
+            d = `${d} L ${x} ${y}`;
+            path.setAttribute('d', `${d}`);
+        }
+    }
+
+    function endStroke(x, y) {
+        initPath();
+    }
+    
+    canvas.addEventListener("mousedown", (e) => {
+        console.log('mousedown %o', e);
+        startStroke(e.offsetX, e.offsetY)}
+        );
+    canvas.addEventListener("mousemove", (e) => updateStroke(e.offsetX, e.offsetY));
+    canvas.addEventListener("mouseup", (e) => endStroke(e.offsetX, e.offsetY));
+    canvas.addEventListener("touchstart", (e) => console.log(e));
+    canvas.addEventListener("touchmove", (e) => console.log(e));
+    canvas.addEventListener("touchend", (e) => console.log(e));
+    canvas.addEventListener("pointerdown", (e) => console.log(e));
+    canvas.addEventListener("pointermove", (e) => console.log(e));
+    canvas.addEventListener("pointerup", (e) => console.log(e));
+</script>
+</body>
+</html>
