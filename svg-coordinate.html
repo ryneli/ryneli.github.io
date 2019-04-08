@@ -13,6 +13,7 @@
     canvas = document.getElementById("canvas");
     output = document.getElementById("output");
     function print(prefix, e) {
+        console.log('%s %o', prefix, e);
         rect = e.srcElement.getBoundingClientRect();
         if (prefix === 'touchstart') {
             touch = e.touches[0];
