@@ -27,14 +27,15 @@
     }
 
     function updateStroke(x, y) {
-        console.log('updateStroke %s', d);
         if (d.startsWith('M')) {
             d = `${d} L ${x} ${y}`;
             path.setAttribute('d', `${d}`);
         }
     }
 
-    function endStroke(x, y) {}
+    function endStroke(x, y) {
+        initPath();
+    }
     
     canvas.addEventListener("mousedown", (e) => {
         startStroke(e.offsetX, e.offsetY);
@@ -68,7 +69,7 @@
         updateStroke(e.offsetX, e.offsetY);
         e.preventDefault();
     });
-    canvas.addEventListener("pointerup", {
+    canvas.addEventListener("pointerup", (e) => {
         endStroke(e.offsetX, e.offsetY);
         e.preventDefault();
     });
