@@ -21,6 +21,7 @@
     }
 
     function startStroke(x, y) {
+        initPath()
         d = `M ${x} ${y}`;
         canvas.append(path);
     }
@@ -33,9 +34,7 @@
         }
     }
 
-    function endStroke(x, y) {
-        initPath();
-    }
+    function endStroke(x, y) {}
     
     canvas.addEventListener("mousedown", (e) => {
         startStroke(e.offsetX, e.offsetY);
