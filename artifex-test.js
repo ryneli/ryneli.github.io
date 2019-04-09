@@ -6,7 +6,10 @@ class Wow {
         this.startStrokeFn = startStrokeFn;
         this.updateStrokeFn = updateStrokeFn;
         this.endStrokeFn = endStrokeFn;
-        this.svgEl.addEventListener('pointerdown', (e) => console.log('artifex %o', e));
+        this.svgEl.addEventListener('pointerdown', (e) => {
+            console.log('artifex %o', e);
+            this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: {x: 0, y: 0}}));
+        });
     }
 
     onTouchStart(e) {
