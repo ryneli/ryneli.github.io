@@ -53,15 +53,18 @@
         e.preventDefault();
     });
     canvas.addEventListener("touchstart", (e) => {
-        startStroke(e.touches[0].clientX, e.touches[0].clientY);
+        const rect = e.srcElement.getBoundingClientRect();
+        startStroke(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
         e.preventDefault();
     });
     canvas.addEventListener("touchmove", (e) => {
-        updateStroke(e.touches[0].clientX, e.touches[0].clientY);
+        const rect = e.srcElement.getBoundingClientRect();
+        update(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
         e.preventDefault();
     });
     canvas.addEventListener("touchend", (e) => {
-        endStroke(e.touches[0].clientX, e.touches[0].clientY);
+        const rect = e.srcElement.getBoundingClientRect();
+        endStroke(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
         e.preventDefault();
     });
     canvas.addEventListener("pointerdown", (e) => {
