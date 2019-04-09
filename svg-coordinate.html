@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
-<script src="./artifex-test.js"></script>
 
 <body>
 
 <label id="output" >no info</label>
-<svg id="canvas" height="500" width="200" style="background-color:aliceblue; top: 100px; left: 500px; position: absolute">
+<svg id="canvas" class="boardsvg" height="500" width="200" style="background-color:aliceblue; top: 100px; left: 500px; position: absolute">
   <circle cx="100" cy="100" r="50" stroke="black" stroke-width="3" fill="red" />
   Sorry, your browser does not support inline SVG.  
 </svg> 
@@ -32,5 +31,6 @@
     canvas.addEventListener("mousedown", (e) => print('mousedown', e));
     canvas.addEventListener("pointerdown", (e) => print('pointerdown', e));
 </script>
+<script src="./artifex-test.js"></script>
 </body>
 </html>
