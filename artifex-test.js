@@ -5,7 +5,15 @@ class Wow {
         this.updateStrokeFn = updateStrokeFn;
         this.endStrokeFn = endStrokeFn;
         this.svgEl.addEventListener('pointerdown', (e) => {
-            console.log('artifex %o', e);
+            console.log('artifex pointerdown %o', e);
+            this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: {x: 0, y: 0}}));
+        });
+        this.svgEl.addEventListener('mousedown', (e) => {
+            console.log('artifex mousedown %o', e);
+            this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: {x: 0, y: 0}}));
+        });
+        this.svgEl.addEventListener('touchstart', (e) => {
+            console.log('artifex touchstart %o', e);
             this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: {x: 0, y: 0}}));
         });
     }
