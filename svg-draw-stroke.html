@@ -55,8 +55,8 @@
     canvas.addEventListener("touchstart", (e) => {
         const rect = e.srcElement.getBoundingClientRect();
         const touch = e.touches[0];
-        
-        startStroke(touch.clientX - touch.target.offsetX, touch.clientY - touch.target.offsetY);
+        console.log('touchstart %o', e);
+        startStroke(touch.clientX - touch.target.left, touch.clientY - touch.target.top);
         e.preventDefault();
     });
     canvas.addEventListener("touchmove", (e) => {
