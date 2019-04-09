@@ -3,11 +3,11 @@
 
 <body>
 
-    <div style="left:100px; top:100px; position:absolute">
-<svg id="canvas" height="500" width="500" style="background-color:aliceblue">
-    <circle cx="100" cy="100" r="50" fill="yellow"></circle>
-  Sorry, your browser does not support inline SVG.  
-</svg> 
+<div style="left:100px; top:100px; position:absolute">
+    <svg id="canvas" height="500" width="500" style="background-color:aliceblue">
+        <circle cx="100" cy="100" r="50" fill="blue"></circle>
+    Sorry, your browser does not support inline SVG.  
+    </svg> 
 </div>
  
 <script>
@@ -59,7 +59,7 @@
     });
     canvas.addEventListener("touchmove", (e) => {
         const rect = e.srcElement.getBoundingClientRect();
-        update(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+        updateStroke(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
         e.preventDefault();
     });
     canvas.addEventListener("touchend", (e) => {
