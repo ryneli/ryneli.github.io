@@ -56,17 +56,17 @@
         const rect = e.srcElement.getBoundingClientRect();
         const touch = e.touches[0];
         console.log('touchstart %o', e);
-        startStroke(touch.clientX - touch.target.left, touch.clientY - touch.target.top);
+        startStroke(e.layerX, e.layerY);
         e.preventDefault();
     });
     canvas.addEventListener("touchmove", (e) => {
         const rect = e.srcElement.getBoundingClientRect();
-        updateStroke(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+        updateStroke(e.layerX, e.layerY);
         e.preventDefault();
     });
     canvas.addEventListener("touchend", (e) => {
         const rect = e.srcElement.getBoundingClientRect();
-        endStroke(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+        endStroke(e.layerX, e.layerY);
         e.preventDefault();
     });
     canvas.addEventListener("pointerdown", (e) => {
