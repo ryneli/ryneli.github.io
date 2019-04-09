@@ -1,5 +1,3 @@
-console.log("artifex test");
-
 class Wow {
     constructor(svgEl, startStrokeFn, updateStrokeFn, endStrokeFn) {
         this.svgEl = svgEl;
@@ -25,6 +23,7 @@ class Wow {
 }
 
 svgEls = document.getElementsByClassName('boardsvg');
+console.log("AFX:zhenqiangli %o", svgEls);
 Array.from(svgEls).forEach((svgEl) => {
     new Wow(svgEl, ()=>{}, ()=>{}, ()=>{});
 });
