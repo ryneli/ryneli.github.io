@@ -30,8 +30,15 @@ class Wow {
     }
 }
 
-svgEls = document.getElementsByClassName('boardsvg');
-console.log("AFX:zhenqiangli %o", svgEls);
-Array.from(svgEls).forEach((svgEl) => {
-    new Wow(svgEl, ()=>{}, ()=>{}, ()=>{});
-});
+elementIds = new Set([]);
+window.setTimeout(() => {
+    svgEls = document.getElementsByClassName('boardsvg');
+    console.log("AFX:zhenqiangli %o", svgEls);
+    Array.from(svgEls).forEach((svgEl) => {
+        if (!elementIds.has(svgEl.id)) {
+            new Wow(svgEl, ()=>{}, ()=>{}, ()=>{});
+        }
+    });
+}, 1000);
+
+
