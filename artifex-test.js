@@ -31,7 +31,8 @@ class Wow {
 }
 
 elementIds = new Set([]);
-window.setTimeout(() => {
+
+function tryInit() {
     svgEls = document.getElementsByClassName('boardsvg');
     console.log("AFX:zhenqiangli %o", svgEls);
     Array.from(svgEls).forEach((svgEl) => {
@@ -39,6 +40,11 @@ window.setTimeout(() => {
             new Wow(svgEl, ()=>{}, ()=>{}, ()=>{});
         }
     });
-}, 1000);
+}
+
+
+window.setInterval(() => {
+    tryInit();
+}, 5000);
 
 
