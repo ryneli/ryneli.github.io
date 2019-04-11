@@ -38,9 +38,10 @@ class Wow {
 
     onTouchStart(e) {
         const bounding = this.svgEl.getBoundingClientRect();
+        const touch = e.target.touches[0];
         const detail = {
-            x: e.target.x - bounding.x, 
-            y: e.target.y - bounding.y,
+            x: touch.clientX - bounding.x, 
+            y: touch.clientY - bounding.y,
             type: getTouchType(e.targetTouches[0].touchType),
         };
         console.log('onTouchStart: (%o, %o), (%o, %o), (%o, %o)', 
@@ -52,9 +53,10 @@ class Wow {
     }
     onTouchMove(e) {
         const bounding = this.svgEl.getBoundingClientRect();
+        const touch = e.target.touches[0];
         const detail = {
-            x: e.target.x - bounding.x, 
-            y: e.target.y - bounding.y,
+            x: touch.clientX - bounding.x, 
+            y: touch.clientY - bounding.y,
             type: getTouchType(e.targetTouches[0].touchType),
         };
         this.svgEl.dispatchEvent(new CustomEvent('WowMove', {detail}));
