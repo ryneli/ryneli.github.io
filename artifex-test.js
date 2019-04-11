@@ -38,7 +38,7 @@ class Wow {
 
     onTouchStart(e) {
         const bounding = this.svgEl.getBoundingClientRect();
-        const touch = e.target.touches[0];
+        const touch = e.changedTouches[0];
         const detail = {
             x: touch.clientX - bounding.x, 
             y: touch.clientY - bounding.y,
@@ -53,7 +53,7 @@ class Wow {
     }
     onTouchMove(e) {
         const bounding = this.svgEl.getBoundingClientRect();
-        const touch = e.target.touches[0];
+        const touch = e.changedTouches[0];
         const detail = {
             x: touch.clientX - bounding.x, 
             y: touch.clientY - bounding.y,
