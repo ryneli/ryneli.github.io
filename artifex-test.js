@@ -14,6 +14,17 @@ function getCpEvent(x, y, touchType, id) {
     };
 }
 
+function getTouchType(safariType) {
+    switch(safariType) {
+        case 'direct':
+        return 'finger';
+        case 'stylue':
+        return 'pen';
+        default:
+        return safariType;
+    }
+}
+
 class Wow {
     constructor(svgEl) {
         this.svgEl = svgEl;
@@ -27,39 +38,39 @@ class Wow {
 
     onTouchStart(e) {
         const bounding = this.svgEl.getBoundingClientRect();
-        console.log('onTouchStart: (%o, %o), (%o, %o), (%o, %o)', 
-            e.target.scrollLeft, e.target.scrollTop,
-            e.target.pageX, e.target.pageY, 
-            e.target.clientLeft, e.target.clientTop);
-        
-        this.svgEl.dispatchEvent(new CustomEvent('WowDown', 
-        {detail: {
+        const detail = {
             x: e.target.x - bounding.x, 
             y: e.target.y - bounding.y,
-            type: e.targetTouches[0].touchType,
-        }}));
+            type: getTouchType(e.targetTouches[0].touchType),
+        };
+        console.log('onTouchStart: (%o, %o), (%o, %o), (%o, %o)', 
+            e.target.scrollLeft, e.target.scrollTop,
+            e.target.clientLeft, e.target.clientTop,
+            detail);
+        
+        this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail}));
     }
     onTouchMove(e) {
         const bounding = this.svgEl.getBoundingClientRect();
-        this.svgEl.dispatchEvent(new CustomEvent('WowMove', 
-        {detail: {
+        const detail = {
             x: e.target.x - bounding.x, 
             y: e.target.y - bounding.y,
-            type: e.targetTouches[0].touchType,
-        }}));
+            type: getTouchType(e.targetTouches[0].touchType),
+        };
+        this.svgEl.dispatchEvent(new CustomEvent('WowMove', {detail}));
     }
     onTouchEnd(e) {
-        console.log('onTouchEnd: (%o, %o), (%o, %o), (%o, %o)', 
-            e.target.scrollLeft, e.target.scrollTop,
-            e.target.pageX, e.target.pageY, 
-            e.target.clientLeft, e.target.clientTop);
         const bounding = this.svgEl.getBoundingClientRect();
-        this.svgEl.dispatchEvent(new CustomEvent('WowUp', 
-        {detail: {
+        const detail = {
             x: e.target.x - bounding.x, 
             y: e.target.y - bounding.y,
-            type: e.targetTouches[0].touchType,
-        }}));
+        };
+
+        console.log('onTouchEnd: (%o, %o), (%o, %o), detail: %o', 
+            e.target.scrollLeft, e.target.scrollTop,
+            e.target.clientLeft, e.target.clientTop,
+            detail);
+        this.svgEl.dispatchEvent(new CustomEvent('WowUp', {detail}));
     }
 }
 
