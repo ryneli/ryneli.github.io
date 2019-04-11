@@ -26,23 +26,40 @@ class Wow {
     }
 
     onTouchStart(e) {
+        const bounding = this.svgEl.getBoundingClientRect();
         console.log('onTouchStart: (%o, %o), (%o, %o), (%o, %o)', 
             e.target.scrollLeft, e.target.scrollTop,
             e.target.pageX, e.target.pageY, 
             e.target.clientLeft, e.target.clientTop);
-        this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: {x: 0, y: 0}}));
+        
+        this.svgEl.dispatchEvent(new CustomEvent('WowDown', 
+        {detail: {
+            x: e.target.x - bounding.x, 
+            y: e.target.y - bounding.y,
+            type: e.targetTouches[0].touchType,
+        }}));
     }
     onTouchMove(e) {
-        console.log('onTouchMove: (%o, %o), (%o, %o), (%o, %o)', 
-        e.target.scrollLeft, e.target.scrollTop,
-        e.target.pageX, e.target.pageY, 
-        e.target.clientLeft, e.target.clientTop);
+        const bounding = this.svgEl.getBoundingClientRect();
+        this.svgEl.dispatchEvent(new CustomEvent('WowMove', 
+        {detail: {
+            x: e.target.x - bounding.x, 
+            y: e.target.y - bounding.y,
+            type: e.targetTouches[0].touchType,
+        }}));
     }
     onTouchEnd(e) {
         console.log('onTouchEnd: (%o, %o), (%o, %o), (%o, %o)', 
             e.target.scrollLeft, e.target.scrollTop,
             e.target.pageX, e.target.pageY, 
             e.target.clientLeft, e.target.clientTop);
+        const bounding = this.svgEl.getBoundingClientRect();
+        this.svgEl.dispatchEvent(new CustomEvent('WowUp', 
+        {detail: {
+            x: e.target.x - bounding.x, 
+            y: e.target.y - bounding.y,
+            type: e.targetTouches[0].touchType,
+        }}));
     }
 }
 
