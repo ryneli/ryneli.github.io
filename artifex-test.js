@@ -27,22 +27,22 @@ class Wow {
 
     onTouchStart(e) {
         console.log('onTouchStart: (%o, %o), (%o, %o), (%o, %o)', 
-        e.target.scrollX, e.target.scrollY,
-        e.target.pageX, e.target.pageY, 
-        e.target.clientX, e.target.clientY);
+            e.target.scrollLeft, e.target.scrollTop,
+            e.target.pageX, e.target.pageY, 
+            e.target.clientLeft, e.target.clientTop);
         this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: {x: 0, y: 0}}));
     }
     onTouchMove(e) {
         console.log('onTouchMove: (%o, %o), (%o, %o), (%o, %o)', 
-        e.target.scrollX, e.target.scrollY,
+        e.target.scrollLeft, e.target.scrollTop,
         e.target.pageX, e.target.pageY, 
-        e.target.clientX, e.target.clientY);
+        e.target.clientLeft, e.target.clientTop);
     }
     onTouchEnd(e) {
-        console.log('onTouchMove: (%o, %o), (%o, %o), (%o, %o)', 
-        e.target.scrollX, e.target.scrollY,
-        e.target.pageX, e.target.pageY, 
-        e.target.clientX, e.target.clientY);
+        console.log('onTouchEnd: (%o, %o), (%o, %o), (%o, %o)', 
+            e.target.scrollLeft, e.target.scrollTop,
+            e.target.pageX, e.target.pageY, 
+            e.target.clientLeft, e.target.clientTop);
     }
 }
 
