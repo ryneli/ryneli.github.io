@@ -57,7 +57,7 @@ function tryInit() {
     Array.from(svgEls).forEach((svgEl) => {
         if (!elementIds.has(svgEl.id)) {
             if (svgEl.id === '') {
-                svgEl.setProperty('id', createUUID());
+                svgEl.setAttribute('id', createUUID());
             }
             elementIds.add(svgEl.id);
             new Wow(svgEl, ()=>{}, ()=>{}, ()=>{});
