@@ -15,21 +15,9 @@ function getCpEvent(x, y, touchType, id) {
 }
 
 class Wow {
-    constructor(svgEl, startStrokeFn, updateStrokeFn, endStrokeFn) {
+    constructor(svgEl) {
         this.svgEl = svgEl;
-        this.startStrokeFn = startStrokeFn;
-        this.updateStrokeFn = updateStrokeFn;
-        this.endStrokeFn = endStrokeFn;
-        this.svgEl.addEventListener('pointerdown', (e) => {
-            console.log('artifex pointerdown %o', e);
-            this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: getCpEvent(0,0,'finger', 0)}));
-        });
-        this.svgEl.addEventListener('mousedown', (e) => {
-            console.log('artifex mousedown %o', e);
-            this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: getCpEvent(0,0,'finger', 0)}));
-        });
         this.svgEl.addEventListener('touchstart', (e) => {
-            console.log('artifex touchstart %o', e);
             this.onTouchStart(e);
             // this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: getCpEvent(0,0,'finger', 0)}));
         });
@@ -38,14 +26,23 @@ class Wow {
     }
 
     onTouchStart(e) {
-        console.log('artifex: %o', e);
+        console.log('onTouchStart: (%o, %o), (%o, %o), (%o, %o)', 
+        e.target.scrollX, e.target.scrollY,
+        e.target.pageX, e.target.pageY, 
+        e.target.clientX, e.target.clientY);
         this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: {x: 0, y: 0}}));
     }
     onTouchMove(e) {
-        console.log('artifex: %o', e);
+        console.log('onTouchMove: (%o, %o), (%o, %o), (%o, %o)', 
+        e.target.scrollX, e.target.scrollY,
+        e.target.pageX, e.target.pageY, 
+        e.target.clientX, e.target.clientY);
     }
     onTouchEnd(e) {
-        console.log('artifex: %o', e);
+        console.log('onTouchMove: (%o, %o), (%o, %o), (%o, %o)', 
+        e.target.scrollX, e.target.scrollY,
+        e.target.pageX, e.target.pageY, 
+        e.target.clientX, e.target.clientY);
     }
 }
 
@@ -53,14 +50,14 @@ elementIds = new Set([]);
 
 function tryInit() {
     svgEls = document.getElementsByClassName('boardsvg');
-    console.log("AFX:zhenqiangli %o", svgEls);
     Array.from(svgEls).forEach((svgEl) => {
         if (!elementIds.has(svgEl.id)) {
             if (svgEl.id === '') {
                 svgEl.setAttribute('id', createUUID());
             }
+            console.log("AFX:zhenqiangli %o", svgEl);
             elementIds.add(svgEl.id);
-            new Wow(svgEl, ()=>{}, ()=>{}, ()=>{});
+            new Wow(svgEl);
         }
     });
 }
