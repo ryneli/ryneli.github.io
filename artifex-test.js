@@ -30,8 +30,11 @@ class Wow {
         });
         this.svgEl.addEventListener('touchstart', (e) => {
             console.log('artifex touchstart %o', e);
-            this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: getCpEvent(0,0,'finger', 0)}));
+            this.onTouchStart(e);
+            // this.svgEl.dispatchEvent(new CustomEvent('WowDown', {detail: getCpEvent(0,0,'finger', 0)}));
         });
+        this.svgEl.addEventListener('touchmove', (e) => this.onTouchMove(e));
+        this.svgEl.addEventListener('touchend', (e) => this.onTouchEnd(e));
     }
 
     onTouchStart(e) {
