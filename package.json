@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Personal website",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "pdfjs-dist": "^2.0.943"
+  },
   "devDependencies": {
     "jasmine": "^3.4.0"
   },
