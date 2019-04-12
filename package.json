@@ -1,0 +1,26 @@
+{
+  "name": "ryneli.github.io",
+  "version": "1.0.0",
+  "description": "Personal website",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine": "^3.4.0"
+  },
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryneli/ryneli.github.io.git"
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": "Zhenqiang Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryneli/ryneli.github.io/issues"
+  },
+  "homepage": "https://github.com/ryneli/ryneli.github.io#readme"
+}
