@@ -113,3 +113,6 @@ window.addEventListener('touchstart', (e) => e.preventDefault());
 window.addEventListener('touchmove', (e) => e.preventDefault());
 window.addEventListener('touchend', (e) => e.preventDefault());
 
+document.querySelector('meta%5Bname=viewport%5D').setAttribute('content','width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+
+
