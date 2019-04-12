@@ -50,11 +50,13 @@
             });
             this.svg.addEventListener("touchmove", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
+                const touch = e.touches[0];
                 this.updateStroke(touch.clientX - rect.left, touch.clientY - rect.top);
                 e.preventDefault();
             });
             this.svg.addEventListener("touchend", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
+                const touch = e.touches[0];
                 this.endStroke(touch.clientX - rect.left, touch.clientY - rect.top);
                 e.preventDefault();
             });
