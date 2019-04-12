@@ -28,10 +28,7 @@
 
             this.svg = this.shadowRoot.getElementById('notepad');
             this.initPath();
-            this.initListeners();
         }
-
-        
 
         initPath() {
             this.path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -39,51 +36,6 @@
             this.path.setAttribute('fill', 'none');
             this.path.setAttribute('stroke-width', '3');
             this.d = '';
-        }
-
-        initListeners() {
-            this.svg.addEventListener("touchstart", (e) => {
-                const rect = e.srcElement.getBoundingClientRect();
-                const touch = e.touches[0];
-                this.startStroke(touch.clientX - rect.left, touch.clientY - rect.top);
-                e.preventDefault();
-            });
-            this.svg.addEventListener("touchmove", (e) => {
-                const rect = e.srcElement.getBoundingClientRect();
-                const touch = e.touches[0];
-                this.updateStroke(touch.clientX - rect.left, touch.clientY - rect.top);
-                e.preventDefault();
-            });
-            this.svg.addEventListener("touchend", (e) => {
-                const rect = e.srcElement.getBoundingClientRect();
-                const touch = e.touches[0];
-                this.endStroke(touch.clientX - rect.left, touch.clientY - rect.top);
-                e.preventDefault();
-            });
-            this.svg.addEventListener("mousedown", (e) => {
-                this.startStroke(e.offsetX, e.offsetY);
-                e.preventDefault();
-            });
-            this.svg.addEventListener("mousemove", (e) => {
-                this.updateStroke(e.offsetX, e.offsetY);
-                e.preventDefault();
-            });
-            this.svg.addEventListener("mouseup", (e) => {
-                this.endStroke(e.offsetX, e.offsetY);
-                e.preventDefault();
-            });
-            this.svg.addEventListener("pointerdown", (e) => {
-                this.startStroke(e.offsetX, e.offsetY);
-                e.preventDefault();
-            });
-            this.svg.addEventListener("pointermove", (e) => {
-                this.updateStroke(e.offsetX, e.offsetY);
-                e.preventDefault();
-            });
-            this.svg.addEventListener("pointerup", (e) => {
-                this.endStroke(e.offsetX, e.offsetY);
-                e.preventDefault();
-            });
         }
 
         startStroke(x, y) {
@@ -103,6 +55,94 @@
             this.initPath();
         }
     }
+
+    class MovableNotePad extends NotePad {
+        constructor() {
+            super();
+            this.initListeners();
+        }
+
+        getTouchType(inType) {
+            switch(inType) {
+                case 'direct':
+                return 'touch';
+                case 'stylus':
+                return 'pen';
+                default:
+                return inType;
+            }
+        }
+
+        initListeners() {
+            this.svg.addEventListener("touchstart", (e) => {
+                const rect = e.srcElement.getBoundingClientRect();
+                const touch = e.touches[0];
+                this.startMove(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                e.preventDefault();
+            });
+            this.svg.addEventListener("touchmove", (e) => {
+                const rect = e.srcElement.getBoundingClientRect();
+                const touch = e.touches[0];
+                this.updateMove(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                e.preventDefault();
+            });
+            this.svg.addEventListener("touchend", (e) => {
+                const rect = e.srcElement.getBoundingClientRect();
+                const touch = e.touches[0];
+                this.endMove(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                e.preventDefault();
+            });
+            this.svg.addEventListener("mousedown", (e) => {
+                this.startMove(e.offsetX, e.offsetY, 'mouse');
+                e.preventDefault();
+            });
+            this.svg.addEventListener("mousemove", (e) => {
+                this.updateMove(e.offsetX, e.offsetY, 'mouse');
+                e.preventDefault();
+            });
+            this.svg.addEventListener("mouseup", (e) => {
+                this.endMove(e.offsetX, e.offsetY, 'mouse');
+                e.preventDefault();
+            });
+            this.svg.addEventListener("pointerdown", (e) => {
+                this.startMove(e.offsetX, e.offsetY, e.pointerType);
+                e.preventDefault();
+            });
+            this.svg.addEventListener("pointermove", (e) => {
+                this.updateMove(e.offsetX, e.offsetY, e.pointerType);
+                e.preventDefault();
+            });
+            this.svg.addEventListener("pointerup", (e) => {
+                this.endMove(e.offsetX, e.offsetY, e.pointerType);
+                e.preventDefault();
+            });
+        }
+
+        startMove(x, y, type) {
+            if (type === 'pen' || type === 'mouse') {
+                this.startStroke(x, y);
+            } else if (type === 'touch') {
+                this.svg.left = x;
+                this.svg.top = y;
+            }
+        }
+        updateMove(x, y, type) {
+            if (type === 'pen' || type === 'mouse') {
+                this.updateStroke(x, y);
+            } else if (type === 'touch') {
+                this.svg.left = x;
+                this.svg.top = y;
+            }
+        }
+        endMove(x, y, type) {
+            if (type === 'pen' || type === 'mouse') {
+                this.endStroke(x, y);
+            } else if (type === 'touch') {
+                this.svg.left = x;
+                this.svg.top = y;
+            }
+        }
+    }
   
-    window.customElements.define('note-pad', NotePad);
+    window.customElements.define('note-pad', MovableNotePad);
   })();
