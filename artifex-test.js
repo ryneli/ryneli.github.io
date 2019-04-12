@@ -113,6 +113,7 @@ window.addEventListener('touchstart', (e) => e.preventDefault());
 window.addEventListener('touchmove', (e) => e.preventDefault());
 window.addEventListener('touchend', (e) => e.preventDefault());
 
-document.querySelector('meta%5Bname=viewport%5D').setAttribute('content','width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-
-
+const metaTag=document.createElement('meta');
+metaTag.name = "viewport"
+metaTag.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+document.getElementsByTagName('head')[0].appendChild(metaTag);
