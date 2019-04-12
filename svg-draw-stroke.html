@@ -39,7 +39,22 @@
     function endStroke(x, y) {
         initPath();
     }
-    
+    canvas.addEventListener("touchstart", (e) => {
+        const rect = e.srcElement.getBoundingClientRect();
+        const touch = e.touches[0];
+        startStroke(touch.clientX - rect.left, touch.clientY - rect.top);
+        e.preventDefault();
+    });
+    canvas.addEventListener("touchmove", (e) => {
+        const rect = e.srcElement.getBoundingClientRect();
+        updateStroke(touch.clientX - rect.left, touch.clientY - rect.top);
+        e.preventDefault();
+    });
+    canvas.addEventListener("touchend", (e) => {
+        const rect = e.srcElement.getBoundingClientRect();
+        endStroke(touch.clientX - rect.left, touch.clientY - rect.top);
+        e.preventDefault();
+    });
     canvas.addEventListener("mousedown", (e) => {
         startStroke(e.offsetX, e.offsetY);
         e.preventDefault();
@@ -50,23 +65,6 @@
     });
     canvas.addEventListener("mouseup", (e) => {
         endStroke(e.offsetX, e.offsetY);
-        e.preventDefault();
-    });
-    canvas.addEventListener("touchstart", (e) => {
-        const rect = e.srcElement.getBoundingClientRect();
-        const touch = e.touches[0];
-        console.log('touchstart %o', e);
-        startStroke(e.layerX, e.layerY);
-        e.preventDefault();
-    });
-    canvas.addEventListener("touchmove", (e) => {
-        const rect = e.srcElement.getBoundingClientRect();
-        updateStroke(e.layerX, e.layerY);
-        e.preventDefault();
-    });
-    canvas.addEventListener("touchend", (e) => {
-        const rect = e.srcElement.getBoundingClientRect();
-        endStroke(e.layerX, e.layerY);
         e.preventDefault();
     });
     canvas.addEventListener("pointerdown", (e) => {
