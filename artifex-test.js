@@ -103,8 +103,13 @@ function createUUID(){
 }
 
 
+/* register SVG element listener.
 window.setInterval(() => {
     tryInit();
 }, 5000);
+*/
 
+window.addEventListener('touchstart', (e) => e.preventDefault());
+window.addEventListener('touchmove', (e) => e.preventDefault());
+window.addEventListener('touchend', (e) => e.preventDefault());
 
