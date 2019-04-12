@@ -4,6 +4,7 @@
     template.innerHTML = `
         <style>
           #notepad {
+              position: absolute;
             font-size: 2.5rem;
             color: hotpink;
             font-family: monospace;
@@ -60,6 +61,19 @@
         constructor() {
             super();
             this.initListeners();
+            this.resetMoving();
+        }
+
+        resetMoving() {
+            this.moving = false;
+        }
+
+        setMoving() {
+            this.moving = true;
+        }
+
+        isMoving() {
+            return !!this.moving;
         }
 
         getTouchType(inType) {
@@ -119,27 +133,29 @@
         }
 
         startMove(x, y, type) {
-            if (type === 'pen' || type === 'mouse') {
+            if (type === 'pen') {
                 this.startStroke(x, y);
-            } else if (type === 'touch') {
-                this.svg.left = x;
-                this.svg.top = y;
+            } else if (type === 'touch' || type === 'mouse') {
+                this.setMoving();
+                this.svg.style.left = x;
+                this.svg.style.top = y;
             }
         }
         updateMove(x, y, type) {
-            if (type === 'pen' || type === 'mouse') {
+            if (type === 'pen') {
                 this.updateStroke(x, y);
-            } else if (type === 'touch') {
-                this.svg.left = x;
-                this.svg.top = y;
+            } else if ((type === 'touch' || type === 'mouse') && this.isMoving()) {
+                this.svg.style.left = x;
+                this.svg.style.top = y;
             }
         }
         endMove(x, y, type) {
-            if (type === 'pen' || type === 'mouse') {
+            if (type === 'pen') {
                 this.endStroke(x, y);
-            } else if (type === 'touch') {
-                this.svg.left = x;
-                this.svg.top = y;
+            } else if (type === 'touch' || type === 'mouse') {
+                this.resetMoving();
+                this.svg.style.left = x;
+                this.svg.style.top = y;
             }
         }
     }
