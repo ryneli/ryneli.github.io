@@ -2,6 +2,10 @@ const Geometry = require('../geometry');
 const Model = require('../model');
 
 describe('model test suite', function() {
+    it ("Point init", function() {
+        const p = new Model.Point(0, 1);
+        expect(true).toBe(0 === p.x && 1 === p.y);
+    });
     it("Point to point plus/minus", function () {
         const p1 = new Model.Point(0,0);
         const p2 = new Model.Point(1,0);

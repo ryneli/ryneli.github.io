@@ -21,4 +21,11 @@ class Point {
     }
 }
 
+class Path {
+    // Point array
+    constructor(points) {
+        this.points = points;
+    }
+}
+
 module.exports = {Point};
