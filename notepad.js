@@ -1,34 +1,99 @@
 (function() {
-    const template = document.createElement('template');
-  
-    template.innerHTML = `
-        <style>
-          .notepad {
-            position: absolute;
-            width: 10em;
-            height: 10em;
-            top: 2em;
-            left: 2em;
-
-            font-size: 2.5rem;
-            color: hotpink;
-            font-family: monospace;
-            text-align: center;
-            text-decoration: pink solid underline;
-            text-decoration-skip: ink;
-            background-color: green;
-          }
-        </style>
-        <svg id='notepad' style='position: absolute; width: 10em; height: 10em; background-color: green;'>svg is not support here</svg>
-    `;
-  
     class NotePad extends HTMLElement {
 
         connectedCallback() {
             this.innerHTML = `
-            <svg id='notepad' style='width=10em; height=10em; background-color=green'>
+            <svg id='notepad-svg' style='width: 90vw; height: 90vh; background-color: green;'>
             </svg>`
-            this.svg = document.getElementById('notepad');
+            this.svgcontainer = document.getElementById('notepad');
+            this.svg = document.getElementById('notepad-svg');
+            this.initListeners();
+            this.movable = new Movable(this.svgcontainer);
+            this.drawable = new Drawable(this.svg);
+        }
+
+        getTouchType(inType) {
+            switch(inType) {
+                case 'direct':
+                    return 'touch';
+                case 'stylus':
+                    return 'pen';
+                default:
+                    return inType;
+            }
+        }
+
+        startAction(x, y, touchType) {
+            if (touchType === 'touch') {
+                this.movable.startMove(x, y);
+            } else if (touchType === 'pen' || touchType === 'mouse') {
+                this.drawable.startStroke(x, y);
+            }
+        }
+        updateAction(x, y, touchType) {
+            if (touchType === 'touch') {
+                this.movable.updateMove(x, y);
+            } else if (touchType === 'pen' || touchType === 'mouse') {
+                this.drawable.updateStroke(x, y);
+            }
+        }
+        endAction(x, y, touchType) {
+            if (touchType === 'touch') {
+                this.movable.endMove(x, y);
+            } else if (touchType === 'pen' || touchType === 'mouse') {
+                this.drawable.endStroke(x, y);
+            }
+        }
+
+        initListeners() {
+            this.svgcontainer.addEventListener("touchstart", (e) => {
+                const rect = e.srcElement.getBoundingClientRect();
+                const touch = e.touches[0];
+                this.startAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                e.preventDefault();
+            });
+            this.svgcontainer.addEventListener("touchmove", (e) => {
+                const rect = e.srcElement.getBoundingClientRect();
+                const touch = e.touches[0];
+                this.updateAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                e.preventDefault();
+            });
+            this.svgcontainer.addEventListener("touchend", (e) => {
+                const rect = e.srcElement.getBoundingClientRect();
+                const touch = e.touches[0];
+                this.endAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                e.preventDefault();
+            });
+            this.svgcontainer.addEventListener("mousedown", (e) => {
+                this.startAction(e.clientX, e.clientY, 'mouse');
+                e.preventDefault();
+            });
+            this.svgcontainer.addEventListener("mousemove", (e) => {
+                this.updateAction(e.clientX, e.clientY, 'mouse');
+                e.preventDefault();
+            });
+            this.svgcontainer.addEventListener("mouseup", (e) => {
+                this.endAction(e.clientX, e.clientY, 'mouse');
+                e.preventDefault();
+            });
+            this.svgcontainer.addEventListener("pointerdown", (e) => {
+                this.startAction(e.clientX, e.clientY, e.pointerType);
+                e.preventDefault();
+            });
+            this.svgcontainer.addEventListener("pointermove", (e) => {
+                this.updateAction(e.clientX, e.clientY, e.pointerType);
+                e.preventDefault();
+            });
+            this.svgcontainer.addEventListener("pointerup", (e) => {
+                this.endAction(e.clientX, e.clientY, e.pointerType);
+                e.preventDefault();
+            });
+        }
+    }
+
+    class Drawable {
+        constructor(targetSvg) {
+            this.svg = targetSvg;
             this.initPath();
         }
 
@@ -41,7 +106,7 @@
         }
 
         startStroke(x, y) {
-            this.initPath()
+            this.initPath();
             this.d = `M ${x} ${y}`;
             this.svg.append(this.path);
         }
@@ -58,16 +123,10 @@
         }
     }
 
-    class MovableNotePad extends HTMLElement {
-        connectedCallback() {
-            this.innerHTML = `
-            <svg style='width: 10em; height: 10em; background-color: green'>
-            </svg>`
-            this.svgcontainer = document.getElementById('notepad');
-            this.initListeners();
-            this.resetMoving();
+    class Movable {
+        constructor(target) {
+            this.target = target;
         }
-
         resetMoving() {
             this.moving = false;
         }
@@ -80,94 +139,30 @@
             return this.moving;
         }
 
-        getTouchType(inType) {
-            switch(inType) {
-                case 'direct':
-                    return 'touch';
-                case 'stylus':
-                    return 'pen';
-                default:
-                    return inType;
+        startMove(x, y) {
+            console.log('startMove: (%o, %o)', x, y);
+            this.setMoving();
+            this.targetLeft = this.target.offsetLeft;
+            this.targetTop = this.target.offsetTop;
+            this.startX = x;
+            this.startY = y;
+        }
+
+        updateMove(x, y) {
+            if (this.moving) {
+                const calX = this.targetLeft + x - this.startX;
+                const calY = this.targetTop + y - this.startY
+                this.target.style.left = calX + 'px';
+                this.target.style.top = calY + 'px';
+                console.log('updateMove: (%o, %o) %o', calX, calY, this.target);
             }
         }
 
-        initListeners() {
-            this.svgcontainer.addEventListener("touchstart", (e) => {
-                const rect = e.srcElement.getBoundingClientRect();
-                const touch = e.touches[0];
-                this.startMove(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
-                e.preventDefault();
-            });
-            this.svgcontainer.addEventListener("touchmove", (e) => {
-                const rect = e.srcElement.getBoundingClientRect();
-                const touch = e.touches[0];
-                this.updateMove(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
-                e.preventDefault();
-            });
-            this.svgcontainer.addEventListener("touchend", (e) => {
-                const rect = e.srcElement.getBoundingClientRect();
-                const touch = e.touches[0];
-                this.endMove(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
-                e.preventDefault();
-            });
-            this.svgcontainer.addEventListener("mousedown", (e) => {
-                this.startMove(e.clientX, e.clientY, 'mouse');
-                e.preventDefault();
-            });
-            this.svgcontainer.addEventListener("mousemove", (e) => {
-                this.updateMove(e.clientX, e.clientY, 'mouse');
-                e.preventDefault();
-            });
-            this.svgcontainer.addEventListener("mouseup", (e) => {
-                this.endMove(e.clientX, e.clientY, 'mouse');
-                e.preventDefault();
-            });
-            this.svgcontainer.addEventListener("pointerdown", (e) => {
-                this.startMove(e.clientX, e.clientY, e.pointerType);
-                e.preventDefault();
-            });
-            this.svgcontainer.addEventListener("pointermove", (e) => {
-                this.updateMove(e.clientX, e.clientY, e.pointerType);
-                e.preventDefault();
-            });
-            this.svgcontainer.addEventListener("pointerup", (e) => {
-                this.endMove(e.clientX, e.clientY, e.pointerType);
-                e.preventDefault();
-            });
-        }
-
-        startMove(x, y, type) {
-            if (type === 'pen') {
-                this.startStroke(x, y);
-            } else if (type === 'touch' || type === 'mouse') {
-                console.log('startMove: (%o, %o) %o', x, y, type);
-                this.setMoving();
-                this.svgOldX = this.svgcontainer.offsetLeft;
-                this.svgOldY = this.svgcontainer.offsetTop;
-                this.startX = x;
-                this.startY = y;
-            }
-        }
-        updateMove(x, y, type) {
-            if (type === 'pen') {
-                this.updateStroke(x, y);
-            } else if ((type === 'touch' || type === 'mouse') && this.isMoving()) {
-                const calX = this.svgOldX + x - this.startX;
-                const calY = this.svgOldY + y - this.startY
-                this.svgcontainer.style.left = calX + 'px';
-                this.svgcontainer.style.top = calY + 'px';
-                console.log('updateMove: (%o, %o) %o %o', calX, calY, type, this.svgcontainer);
-            }
-        }
         endMove(x, y, type) {
-            if (type === 'pen') {
-                this.endStroke(x, y);
-            } else if (type === 'touch' || type === 'mouse') {
-                console.log('endMove: (%o, %o) %o', x, y, type);
-                this.resetMoving();
-            }
+            console.log('endMove: (%o, %o)', x, y);
+            this.resetMoving();
         }
     }
   
-    window.customElements.define('note-pad', MovableNotePad);
+    window.customElements.define('note-pad', NotePad);
   })();
