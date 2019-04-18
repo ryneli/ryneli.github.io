@@ -51,42 +51,51 @@
                 const touch = e.touches[0];
                 this.startAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
                 e.preventDefault();
+                e.stopPropagation();
             });
             this.svgcontainer.addEventListener("touchmove", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
                 this.updateAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
                 e.preventDefault();
+                e.stopPropagation();
             });
             this.svgcontainer.addEventListener("touchend", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
                 this.endAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
                 e.preventDefault();
+                e.stopPropagation();
             });
             this.svgcontainer.addEventListener("mousedown", (e) => {
                 this.startAction(e.clientX, e.clientY, 'mouse');
                 e.preventDefault();
+                e.stopPropagation();
             });
             this.svgcontainer.addEventListener("mousemove", (e) => {
                 this.updateAction(e.clientX, e.clientY, 'mouse');
                 e.preventDefault();
+                e.stopPropagation();
             });
             this.svgcontainer.addEventListener("mouseup", (e) => {
                 this.endAction(e.clientX, e.clientY, 'mouse');
                 e.preventDefault();
+                e.stopPropagation();
             });
             this.svgcontainer.addEventListener("pointerdown", (e) => {
                 this.startAction(e.clientX, e.clientY, e.pointerType);
                 e.preventDefault();
+                e.stopPropagation();
             });
             this.svgcontainer.addEventListener("pointermove", (e) => {
                 this.updateAction(e.clientX, e.clientY, e.pointerType);
                 e.preventDefault();
+                e.stopPropagation();
             });
             this.svgcontainer.addEventListener("pointerup", (e) => {
                 this.endAction(e.clientX, e.clientY, e.pointerType);
                 e.preventDefault();
+                e.stopPropagation();
             });
         }
     }
