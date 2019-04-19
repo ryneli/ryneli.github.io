@@ -42,6 +42,9 @@
                 this.movable.endMove(x, y);
             } else if (touchType === 'pen' || touchType === 'mouse') {
                 this.drawable.endStroke(x, y);
+            } else if (touchType === 'unknown') {
+                this.movable.endMove(x, y);
+                this.drawable.endStroke(x, y);
             }
         }
 
@@ -63,7 +66,7 @@
             this.svgcontainer.addEventListener("touchend", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
-                this.endAction(touch.clientX - rect.left, touch.clientY - rect.top, this.getTouchType(touch.touchType));
+                this.endAction(-1, -1, 'unknown');
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -167,7 +170,7 @@
             }
         }
 
-        endMove(x, y, type) {
+        endMove(x, y) {
             console.log('endMove: (%o, %o)', x, y);
             this.resetMoving();
         }
