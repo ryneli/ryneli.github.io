@@ -49,21 +49,21 @@
             this.svgcontainer.addEventListener("touchstart", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
-                this.startAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                this.startAction(touch.clientX - rect.left, touch.clientY - rect.top, this.getTouchType(touch.touchType));
                 e.preventDefault();
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("touchmove", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
-                this.updateAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                this.updateAction(touch.clientX - rect.left, touch.clientY - rect.top, this.getTouchType(touch.touchType));
                 e.preventDefault();
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("touchend", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
-                this.endAction(touch.clientX - rect.left, touch.clientY - rect.top, getTouchType(touch.touchType));
+                this.endAction(touch.clientX - rect.left, touch.clientY - rect.top, this.getTouchType(touch.touchType));
                 e.preventDefault();
                 e.stopPropagation();
             });
