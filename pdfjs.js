@@ -1,18 +1,18 @@
 // If absolute URL from the remote server is provided, configure the CORS
 // header on that server.
-var url = './pdf/zaijidulizhangjin.pdf';
+var url = './pdf/compressed.tracemonkey-pldi-09.pdf';
 
 // Loaded via <script> tag, create shortcut to access PDF.js exports.
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
 // The workerSrc property shall be specified.
-pdfjsLib.GlobalWorkerOptions.workerSrc = './node_modules/pdfjs-dist/build/pdf.worker.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
 var pdfDoc = null,
     pageNum = 1,
     pageRendering = false,
     pageNumPending = null,
-    scale = 0.8,
+    scale = 2.0,
     canvas = document.getElementById('the-canvas'),
     ctx = canvas.getContext('2d');
 
