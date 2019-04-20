@@ -3,7 +3,7 @@
 
         connectedCallback() {
             this.innerHTML = `
-            <svg id='notepad-svg' style='width: 90vw; height: 90vh; background-color: green;'>
+            <svg id='notepad-svg' style='height:100%; width:100%;'>
             </svg>`
             this.svgcontainer = document.getElementById('notepad');
             this.svg = document.getElementById('notepad-svg');
