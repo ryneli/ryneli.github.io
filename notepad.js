@@ -14,13 +14,7 @@
         }
 
         setBackground() {
-            if (this.svgcontainer.style.backgroundImage !== '') {
-                this.svgcontainer.style.backgroundImage = '';
-            } else {
-                this.svgcontainer.style.backgroundImage = 
-                    'url("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")';
-            }
-            console.log('setBackground %o', this.svgcontainer);
+            pdfSetBackground(this.svgcontainer);
         }
 
         getTouchType(inType) {
