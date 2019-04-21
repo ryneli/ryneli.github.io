@@ -1,6 +1,6 @@
 // If absolute URL from the remote server is provided, configure the CORS
 // header on that server.
-var url = 'http://edzxup.u.qiniudn.com/doc%2F2014%2F10%2F28%2F92572ef3c2932221990b551978f4e1d5%2FkktuSfxJ.pdf';
+var url = 'https://zhenqiang.li/pdf/zaijidulizhangjin.pdf';
 
 // Loaded via <script> tag, create shortcut to access PDF.js exports.
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -45,7 +45,7 @@ function renderPage(pdfDoc, num) {
     var renderTask = page.render(renderContext);
 
     // Wait for rendering to finish
-    renderTask.promise.then(function() {
+    renderTask.promise.then(() => {
         console.log('renderPage done %o', targetElement);
         if (targetElement !== null) {
             if (targetElement.style.backgroundImage !== '') {
@@ -56,6 +56,6 @@ function renderPage(pdfDoc, num) {
                 targetElement.style.backgroundImage = canvas.toDataURL('image/png');
             }
         }
-    });
+    }, (e)=> console.log(e));
   });
 }
