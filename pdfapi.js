@@ -53,8 +53,10 @@ function renderPage(num) {
         console.log('renderPage done %o', targetElement);
         if (targetElement !== null) {
             if (targetElement.style.backgroundImage !== '') {
+                console.log('renderPage done %o => empty', targetElement);
                 targetElement.style.backgroundImage = '';
             } else {
+                console.log('renderPage done %o => paper', targetElement);
                 targetElement.style.backgroundImage = canvas.toDataURL('image/png');
             }
         }
