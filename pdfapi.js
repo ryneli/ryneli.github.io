@@ -7,7 +7,8 @@ var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
 // The workerSrc property shall be specified.
 pdfjsLib.GlobalWorkerOptions.workerSrc = './js/pdfjs-2.0.943-dist/build/pdf.worker.js';
-var targetElement = null;
+var targetElement = null,
+    currentNumber = 0;
 
 function pdfSetBackground(element) {
     console.log('pdfSetBackground %o', element);
@@ -18,7 +19,8 @@ function pdfSetBackground(element) {
     pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
         console.log('get pdfDoc_ %o', pdfDoc_);
         // Initial/first page rendering
-        renderPage(pdfDoc_, 1 /** page number */);
+        renderPage(pdfDoc_, (currentNumber%pdfDoc_._pdfInfo.numPages + 1));
+        currentNumber += 1;
     }, (e) => console.log('getDocument error %o', e));
 }
 
@@ -48,13 +50,8 @@ function renderPage(pdfDoc, num) {
     renderTask.promise.then(() => {
         console.log('renderPage done %o', targetElement);
         if (targetElement !== null) {
-            if (targetElement.style.backgroundImage !== '') {
-                console.log('renderPage done %o => empty', targetElement);
-                targetElement.style.backgroundImage = '';
-            } else {
-                console.log('renderPage done %o %o %o => paper', targetElement, canvas, canvas.toDataURL('image/png'));
-                targetElement.style.backgroundImage = `url("${canvas.toDataURL('image/png')}")`;
-            }
+            console.log('renderPage done %o %o %o => paper', targetElement, canvas, canvas.toDataURL('image/png'));
+            targetElement.style.backgroundImage = `url("${canvas.toDataURL('image/png')}")`;
         }
     }, (e)=> console.log(e));
   });

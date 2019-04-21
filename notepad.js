@@ -3,10 +3,10 @@
 
         connectedCallback() {
             this.innerHTML = `
-            <svg id='notepad-svg' style='height:100%; width:100%;'>
+            <svg id='notepad-001-svg' style='height:100%; width:100%;'>
             </svg>`
-            this.svgcontainer = document.getElementById('notepad');
-            this.svg = document.getElementById('notepad-svg');
+            this.svgcontainer = document.getElementById('notepad-001');
+            this.svg = document.getElementById('notepad-001-svg');
             this.initListeners();
             this.movable = new Movable(this.svgcontainer);
             this.drawable = new Drawable(this.svg);
@@ -55,7 +55,12 @@
                 console.log('keydown %o', e);
                 switch (e.key) {
                     case 'b':
-                    if (e.ctrlKey) {
+                    if (e.altKey) {
+                        this.setBackground();
+                    }
+                    break;
+                    case 'ArrowRight':
+                    if (e.altKey) {
                         this.setBackground();
                     }
                     break;
@@ -64,6 +69,7 @@
                 }
             });
             this.svgcontainer.addEventListener("touchstart", (e) => {
+                console.log('touchstart %o', e);
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
                 this.startAction(
@@ -91,32 +97,38 @@
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("mousedown", (e) => {
-                this.startAction(e.clientX, e.clientY, 'mouse');
+                const rect = this.svgcontainer.getBoundingClientRect();
+                this.startAction(e.clientX - rect.left, e.clientY - rect.top, 'mouse');
                 e.preventDefault();
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("mousemove", (e) => {
-                this.updateAction(e.clientX, e.clientY, 'mouse');
+                const rect = this.svgcontainer.getBoundingClientRect();
+                this.updateAction(e.clientX - rect.left, e.clientY - rect.top, 'mouse');
                 e.preventDefault();
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("mouseup", (e) => {
-                this.endAction(e.clientX, e.clientY, 'mouse');
+                const rect = this.svgcontainer.getBoundingClientRect();
+                this.endAction(e.clientX - rect.left, e.clientY - rect.top, 'mouse');
                 e.preventDefault();
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("pointerdown", (e) => {
-                this.startAction(e.clientX, e.clientY, e.pointerType);
+                const rect = this.svgcontainer.getBoundingClientRect();
+                this.startAction(e.clientX - rect.left, e.clientY - rect.top, e.pointerType);
                 e.preventDefault();
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("pointermove", (e) => {
-                this.updateAction(e.clientX, e.clientY, e.pointerType);
+                const rect = this.svgcontainer.getBoundingClientRect();
+                this.updateAction(e.clientX - rect.left, e.clientY - rect.top, e.pointerType);
                 e.preventDefault();
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("pointerup", (e) => {
-                this.endAction(e.clientX, e.clientY, e.pointerType);
+                const rect = this.svgcontainer.getBoundingClientRect();
+                this.endAction(e.clientX - rect.left, e.clientY - rect.top, e.pointerType);
                 e.preventDefault();
                 e.stopPropagation();
             });
