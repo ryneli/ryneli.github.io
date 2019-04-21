@@ -10,6 +10,17 @@
             this.initListeners();
             this.movable = new Movable(this.svgcontainer);
             this.drawable = new Drawable(this.svg);
+            this.currentActioner = null;
+        }
+
+        setBackground() {
+            if (this.svgcontainer.style.backgroundImage !== '') {
+                this.svgcontainer.style.backgroundImage = '';
+            } else {
+                this.svgcontainer.style.backgroundImage = 
+                    'url("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")';
+            }
+            console.log('setBackground %o', this.svgcontainer);
         }
 
         getTouchType(inType) {
@@ -25,41 +36,56 @@
 
         startAction(x, y, touchType) {
             if (touchType === 'touch') {
-                this.movable.startMove(x, y);
+                this.currentActioner = this.movable;
             } else if (touchType === 'pen' || touchType === 'mouse') {
-                this.drawable.startStroke(x, y);
+                this.currentActioner = this.drawable;
+            }
+
+            if (this.currentActioner !== null) {
+                this.currentActioner.startAction(x, y);
             }
         }
         updateAction(x, y, touchType) {
-            if (touchType === 'touch') {
-                this.movable.updateMove(x, y);
-            } else if (touchType === 'pen' || touchType === 'mouse') {
-                this.drawable.updateStroke(x, y);
+            if (this.currentActioner !== null) {
+                this.currentActioner.updateAction(x, y);
             }
         }
         endAction(x, y, touchType) {
-            if (touchType === 'touch') {
-                this.movable.endMove(x, y);
-            } else if (touchType === 'pen' || touchType === 'mouse') {
-                this.drawable.endStroke(x, y);
-            } else if (touchType === 'unknown') {
-                this.movable.endMove(x, y);
-                this.drawable.endStroke(x, y);
+            if (this.currentActioner !== null) {
+                this.currentActioner.endAction(x, y);
             }
         }
 
         initListeners() {
+            document.addEventListener('keydown', (e) => {
+                console.log('keydown %o', e);
+                switch (e.key) {
+                    case 'b':
+                    if (e.ctrlKey) {
+                        this.setBackground();
+                    }
+                    break;
+                    default:
+                    // do nothing
+                }
+            });
             this.svgcontainer.addEventListener("touchstart", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
-                this.startAction(touch.clientX - rect.left, touch.clientY - rect.top, this.getTouchType(touch.touchType));
+                this.startAction(
+                    touch.clientX - rect.left, 
+                    touch.clientY - rect.top, 
+                    this.getTouchType(touch.touchType));
                 e.preventDefault();
                 e.stopPropagation();
             });
             this.svgcontainer.addEventListener("touchmove", (e) => {
                 const rect = e.srcElement.getBoundingClientRect();
                 const touch = e.touches[0];
-                this.updateAction(touch.clientX - rect.left, touch.clientY - rect.top, this.getTouchType(touch.touchType));
+                this.updateAction(
+                    touch.clientX - rect.left, 
+                    touch.clientY - rect.top, 
+                    this.getTouchType(touch.touchType));
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -117,20 +143,20 @@
             this.d = '';
         }
 
-        startStroke(x, y) {
+        startAction(x, y) {
             this.initPath();
             this.d = `M ${x} ${y}`;
             this.svg.append(this.path);
         }
 
-        updateStroke(x, y) {
+        updateAction(x, y) {
             if (this.d.startsWith('M')) {
                 this.d = `${this.d} L ${x} ${y}`;
                 this.path.setAttribute('d', `${this.d}`);
             }
         }
 
-        endStroke(x, y) {
+        endAction(x, y) {
             this.initPath();
         }
     }
@@ -151,7 +177,7 @@
             return this.moving;
         }
 
-        startMove(x, y) {
+        startAction(x, y) {
             console.log('startMove: (%o, %o)', x, y);
             this.setMoving();
             this.targetLeft = this.target.offsetLeft;
@@ -160,7 +186,7 @@
             this.startY = y;
         }
 
-        updateMove(x, y) {
+        updateAction(x, y) {
             if (this.moving) {
                 const calX = this.targetLeft + x - this.startX;
                 const calY = this.targetTop + y - this.startY
@@ -170,7 +196,7 @@
             }
         }
 
-        endMove(x, y) {
+        endAction(x, y) {
             console.log('endMove: (%o, %o)', x, y);
             this.resetMoving();
         }
