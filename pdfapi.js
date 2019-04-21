@@ -50,7 +50,7 @@ function renderPage(num) {
 
     // Wait for rendering to finish
     renderTask.promise.then(function() {
-        // TODO(zhenqiangli): set bg.
+        console.log('renderPage done %o', targetElement);
         if (targetElement !== null) {
             if (targetElement.style.backgroundImage !== '') {
                 targetElement.style.backgroundImage = '';
