@@ -19,7 +19,7 @@ function pdfSetBackground(element) {
         console.log('get pdfDoc_ %o', pdfDoc_);
         // Initial/first page rendering
         renderPage(pdfDoc_, 1 /** page number */);
-    });
+    }, (e) => console.log('getDocument error %o', e));
 }
 
 /**
@@ -30,7 +30,7 @@ function renderPage(pdfDoc, num) {
   pageRendering = true;
   // Using promise to fetch the page
   pdfDoc.getPage(num).then(function(page) {
-    var viewport = page.getViewport({scale: 2.0}),
+    var viewport = page.getViewport(1.0),
         canvas = document.createElement('canvas'),
         ctx = canvas.getContext('2d');
     canvas.height = viewport.height;
@@ -52,8 +52,8 @@ function renderPage(pdfDoc, num) {
                 console.log('renderPage done %o => empty', targetElement);
                 targetElement.style.backgroundImage = '';
             } else {
-                console.log('renderPage done %o %o => paper', targetElement, canvas);
-                targetElement.style.backgroundImage = canvas.toDataURL('image/png');
+                console.log('renderPage done %o %o %o => paper', targetElement, canvas, canvas.toDataURL('image/png'));
+                targetElement.style.backgroundImage = `url("${canvas.toDataURL('image/png')}")`;
             }
         }
     }, (e)=> console.log(e));
